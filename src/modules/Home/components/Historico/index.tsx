@@ -4,7 +4,7 @@ import { historicoMensagens } from "../../mocks/historicoMensagens";
 
 export const Historico = () => {
 	return (
-		<section className="w-80 p-3 overflow-y-auto border-r-2">
+		<section className="w-96 p-3 overflow-y-auto border-r-2">
 			<header className="h-32">
 				<h2 className="text-gray-700 font-bold text-xl">Conversas</h2>
 				<div className="mt-5 p-2 flex shadow-md rounded-lg border">
