@@ -1,6 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../shared/components/ui/avatar";
 import { BsTelephone, BsThreeDotsVertical, BsCameraVideo } from "react-icons/bs";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../../../shared/components/ui/tooltip";
+import { GoPaperclip } from "react-icons/go";
+import { AiOutlineCamera } from "react-icons/ai";
 
 export const Mensagem = () => {
 	return (
@@ -53,8 +55,52 @@ export const Mensagem = () => {
 			</div>
       <div className="h-[calc(100%_-_4rem)] flex flex-col justify-between">
 				<div className="h-full">Mensagens</div>
-				<div>
-					<input type="text" />
+				<div className="w-full flex justify-between">
+					<div className="flex w-full shadow-md rounded-lg border p-2">
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<GoPaperclip size={25} className="text-purple-500" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Outros</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+						<input type="text" className="w-full outline-0 ml-2"/>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<BsThreeDotsVertical size={25} className="text-purple-500" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Outros</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<AiOutlineCamera size={25} className="text-purple-500" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Foto</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</div>
+					<div className="ml-2 flex items-center">
+						<TooltipProvider>
+							<Tooltip>
+								<TooltipTrigger>
+									<BsThreeDotsVertical size={25} className="text-purple-500" />
+								</TooltipTrigger>
+								<TooltipContent>
+									<p>Outros</p>
+								</TooltipContent>
+							</Tooltip>
+						</TooltipProvider>
+					</div>
 				</div>
 			</div>
 		</section>
