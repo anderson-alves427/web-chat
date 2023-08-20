@@ -1,4 +1,4 @@
-import { BsChatDots } from "react-icons/bs";
+import { BsChatDots, BsTelephonePlus } from "react-icons/bs";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { GoHome, GoGear } from "react-icons/go";
 
@@ -13,6 +13,7 @@ export const IconsMenu = ({ nome, size, color}: IconsMenuProps) => {
 		<>
 			{nome == 'home' && <GoHome size={size} color={color} className="cursor-pointer"/>}
 			{nome == 'chat' && <BsChatDots size={size} color={color} className="cursor-pointer"/>}
+			{nome == 'add-phone' && <BsTelephonePlus size={size} color={color} className="cursor-pointer"/>}
 			{nome == 'notification' && <IoIosNotificationsOutline size={size} color={color} className="cursor-pointer"/>}
 			{nome == 'setup' && <GoGear size={size} color={color} className="cursor-pointer"/>}
 		</>

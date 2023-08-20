@@ -2,7 +2,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip";
 import { GoSignOut } from "react-icons/go";
 import { IconsMenu } from "./iconsMenu";
+import { menuDataType } from "./types/menuDataType";
 import { MenuData } from "./menuData";
+import { DialogsMenu } from "./dialogsMenu";
 
 export const Menu = () => {
     return (
@@ -12,12 +14,31 @@ export const Menu = () => {
 						<li className="mb-10">
 							<Avatar>
 								<AvatarImage src="https://github.com/shadcn.png" />
-								<AvatarFallback>CN</AvatarFallback>
+								<AvatarFallback>Avatar</AvatarFallback>
 							</Avatar>
 						</li>
 
-						{MenuData.map(item => (
-							<li>
+						{MenuData.map((item: menuDataType) => {
+
+							if (item.action === 'open-modal') {
+								return  (
+								<li>
+									<DialogsMenu nome={item.nome}>
+										<button>
+											<TooltipProvider>
+												<Tooltip>
+													<TooltipTrigger><IconsMenu nome={item.icon} size={30} color="white"/></TooltipTrigger>
+													<TooltipContent>
+														<p>{item.nome}</p>
+													</TooltipContent>
+												</Tooltip>
+											</TooltipProvider>
+										</button>
+									</DialogsMenu>
+								</li>
+								)
+							}
+							return (<li>
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger><IconsMenu nome={item.icon} size={30} color="white"/></TooltipTrigger>
@@ -26,8 +47,9 @@ export const Menu = () => {
 										</TooltipContent>
 									</Tooltip>
 								</TooltipProvider>
-							</li>
-						))}
+							</li>)
+						}
+						)}
 					</ul>
 				</div>
 				<div className="flex justify-center">
