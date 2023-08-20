@@ -3,6 +3,7 @@ import { BsTelephone, BsThreeDotsVertical, BsCameraVideo } from "react-icons/bs"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../../../shared/components/ui/tooltip";
 import { GoPaperclip } from "react-icons/go";
 import { AiOutlineCamera } from "react-icons/ai";
+import { mensagens } from "../../mocks/mensagens";
 
 export const Mensagem = () => {
 	return (
@@ -53,8 +54,22 @@ export const Mensagem = () => {
 					</ul>
 				</div>
 			</div>
-      <div className="h-[calc(100%_-_4rem)] flex flex-col justify-between">
-				<div className="h-full">Mensagens</div>
+      <div className="h-[calc(100%_-_4rem)] flex flex-col justify-bet
+			ween">
+				<div className="h-full overflow-y-auto my-3">
+					{mensagens.map(item => (
+						<div className={`flex w-full mt-5 ${item.id_usuario === 1 ? 'justify-end' : 'justify-start'}`} key={item.id}>
+							<div className={`flex flex-col space-y-1 justify-end mx-3 max-w-4xl`}>
+								<div className={`p-3 rounded-2xl ${item.id_usuario === 1 ? 'bg-purple-500' : 'bg-gray-300'}`}>
+									<p  className={`${item.id_usuario === 1 ? 'text-white' : ''}`}>
+										{item.mensagem}
+									</p>
+								</div>
+								<span className="text-end text-xs text-gray-500 font-semibold">{item.data}</span>
+							</div>
+						</div>
+					))}
+				</div>
 				<div className="w-full flex justify-between">
 					<div className="flex w-full shadow-md rounded-lg border p-2">
 						<TooltipProvider>
