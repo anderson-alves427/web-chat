@@ -1,7 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { Dialog, DialogCloseUi, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import { PulseLoader } from "react-spinners";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
@@ -10,8 +9,29 @@ type DialogAddPhoneProps = {
 };
 
 export const DialogAddPhone = ( { children }: DialogAddPhoneProps) => {
-	const [isLoading, setIsLoading] = useState(false);
+	const [dadosCadastro, setDadosCadastro] = useState({
+		nome: '',
+		contato: ''
+	})
 
+	const handleClickSaveNumber = () => {
+		const savedContactsLocalStorage = localStorage.getItem('savedContacts');
+
+		if (savedContactsLocalStorage) {
+			const contacts = JSON.parse(savedContactsLocalStorage);
+			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro, ...contacts]));
+		} else {
+			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro]));
+		}
+	}
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setDadosCadastro(prevState => ({
+			...prevState,
+			[name]: value
+		}))
+	}
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{children}</DialogTrigger>
@@ -25,18 +45,19 @@ export const DialogAddPhone = ( { children }: DialogAddPhoneProps) => {
 					<form>
 							<div className="space-y-1">
 								<Label htmlFor="nome">Nome</Label>
-								<Input id="nome"/>
+								<Input id="nome" name="nome" value={dadosCadastro.nome} onChange={handleChange}/>
 							</div>
 							<div className="space-y-2">
 								<Label htmlFor="nome">Contato</Label>
-								<Input id="contato" placeholder="85 98659-7552"/>
+								<Input id="contato" name="contato" placeholder="85 98659-7552" value={dadosCadastro.contato} onChange={handleChange}/>
 							</div>
 						<DialogFooter className="mt-6">
 							<Button
 								type="submit"
 								className="min-w-[100px] bg-purple-600"
+								onClick={handleClickSaveNumber}
 							>
-								{isLoading ? <PulseLoader size={8} color="#FFF" /> : "Salvar"}
+								Salvar
 							</Button>
 						</DialogFooter>
 				</form>
