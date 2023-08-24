@@ -2,22 +2,18 @@ import { useState } from "react";
 import { Input } from "../../../shared/components/ui/input";
 import { Label } from "../../../shared/components/ui/label";
 import { Button } from "../../../shared/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 export const SignIn = () => {
+	const navigate = useNavigate();
 	const [dadosCadastro, setDadosCadastro] = useState({
 		nome: '',
 		contato: ''
 	})
 
 	const handleClickSaveNumber = () => {
-		const savedContactsLocalStorage = localStorage.getItem('savedContacts');
-
-		if (savedContactsLocalStorage) {
-			const contacts = JSON.parse(savedContactsLocalStorage);
-			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro, ...contacts]));
-		} else {
-			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro]));
-		}
+		localStorage.setItem('userData', JSON.stringify(dadosCadastro));
+		navigate('/chat');
 	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
