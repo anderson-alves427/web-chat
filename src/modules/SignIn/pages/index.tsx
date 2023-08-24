@@ -3,9 +3,12 @@ import { Input } from "../../../shared/components/ui/input";
 import { Label } from "../../../shared/components/ui/label";
 import { Button } from "../../../shared/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { useChatContext } from "../../Home/context/ChatHook";
 
 export const SignIn = () => {
 	const navigate = useNavigate();
+
+	const { handleChangeUserData } = useChatContext();
 	const [dadosCadastro, setDadosCadastro] = useState({
 		nome: '',
 		contato: ''
@@ -13,6 +16,7 @@ export const SignIn = () => {
 
 	const handleClickSaveNumber = () => {
 		localStorage.setItem('userData', JSON.stringify(dadosCadastro));
+		handleChangeUserData(dadosCadastro);
 		navigate('/chat');
 	}
 

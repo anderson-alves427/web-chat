@@ -4,8 +4,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../
 import { GoPaperclip } from "react-icons/go";
 import { AiOutlineCamera } from "react-icons/ai";
 import { mensagens } from "../../mocks/mensagens";
+import { useChatContext } from "../../context/ChatHook";
 
 export const Mensagem = () => {
+	const { userData } = useChatContext();
 	return (
 		<section className="w-full h-full p-3">
       <div className="h-16 flex justify-between items-center border-b-2">
@@ -15,7 +17,7 @@ export const Mensagem = () => {
 						<AvatarFallback>Anderson</AvatarFallback>
 					</Avatar>
 					<div className="ml-2">
-						<p className="font-bold">Anderson Alves</p>
+						<p className="font-bold">{userData.nome}</p>
 						<span className="text-sm">Online - Last seen, 2:02 pm</span>
 					</div>
 				</div>
