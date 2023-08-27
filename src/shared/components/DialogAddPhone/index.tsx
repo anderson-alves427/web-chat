@@ -3,7 +3,6 @@ import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { useChatContext } from "../../../modules/Home/context/ChatHook";
 import { IContactsData } from "../../../modules/Home/context/ChatContext";
 
 type DialogAddPhoneProps = {
