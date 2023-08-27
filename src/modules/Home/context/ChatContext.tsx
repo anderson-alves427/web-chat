@@ -1,12 +1,18 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
 
-export type UserData = {
+export interface IUserData {
 	nome: string;
 	contato: string;
 }
+
+export interface IContactsData extends IUserData {
+}
+
 export type ChatContextProps = {
-	userData: UserData;
-	handleChangeUserData: (data: UserData) => void;
+	userData: IUserData;
+	handleChangeUserData: (data: IUserData) => void;
+	contactsData: IContactsData[];
+	setContactsData: React.Dispatch<React.SetStateAction<IContactsData[]>>
 }
 
 export const ChatContext = createContext<ChatContextProps>({} as ChatContextProps);

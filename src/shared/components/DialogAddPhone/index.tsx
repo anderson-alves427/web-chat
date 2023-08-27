@@ -1,37 +1,37 @@
-import React, { useState } from "react";
+import React, { useState }  from "react";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { useChatContext } from "../../../modules/Home/context/ChatHook";
+import { IContactsData } from "../../../modules/Home/context/ChatContext";
 
 type DialogAddPhoneProps = {
 	children: React.ReactNode;
 };
 
 export const DialogAddPhone = ( { children }: DialogAddPhoneProps) => {
-	const [dadosCadastro, setDadosCadastro] = useState({
-		nome: '',
-		contato: ''
-	})
+	const [addContactData, setAddContactData] = useState({} as IContactsData);
 
 	const handleClickSaveNumber = () => {
 		const savedContactsLocalStorage = localStorage.getItem('savedContacts');
 
 		if (savedContactsLocalStorage) {
 			const contacts = JSON.parse(savedContactsLocalStorage);
-			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro, ...contacts]));
+			localStorage.setItem('savedContacts', JSON.stringify([addContactData, ...contacts]));
 		} else {
-			localStorage.setItem('savedContacts', JSON.stringify([dadosCadastro]));
+			localStorage.setItem('savedContacts', JSON.stringify([addContactData]));
 		}
 	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		setDadosCadastro(prevState => ({
+		setAddContactData(prevState => ({
 			...prevState,
 			[name]: value
 		}))
-	}
+	};
+
 	return (
 		<Dialog>
 			<DialogTrigger asChild>{children}</DialogTrigger>
@@ -45,11 +45,11 @@ export const DialogAddPhone = ( { children }: DialogAddPhoneProps) => {
 					<form>
 							<div className="space-y-1">
 								<Label htmlFor="nome">Nome</Label>
-								<Input id="nome" name="nome" value={dadosCadastro.nome} onChange={handleChange}/>
+								<Input id="nome" name="nome" value={addContactData.nome} onChange={handleChange}/>
 							</div>
 							<div className="space-y-2">
 								<Label htmlFor="nome">Contato</Label>
-								<Input id="contato" name="contato" placeholder="85 98659-7552" value={dadosCadastro.contato} onChange={handleChange}/>
+								<Input id="contato" name="contato" placeholder="85 98659-7552" value={addContactData.contato} onChange={handleChange}/>
 							</div>
 						<DialogFooter className="mt-6">
 							<Button
