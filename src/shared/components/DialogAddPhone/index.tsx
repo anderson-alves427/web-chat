@@ -4,16 +4,20 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { IContactsData } from "../../../modules/Home/context/ChatContext";
+import { useChatContext } from "../../../modules/Home/context/ChatHook";
 
 type DialogAddPhoneProps = {
 	children: React.ReactNode;
 };
 
 export const DialogAddPhone = ( { children }: DialogAddPhoneProps) => {
+	const { addHistoricoContact } = useChatContext();
 	const [addContactData, setAddContactData] = useState({} as IContactsData);
 
-	const handleClickSaveNumber = () => {
+	const handleClickSaveNumber = (e: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
+		e.preventDefault();
 		const savedContactsLocalStorage = localStorage.getItem('savedContacts');
+		addHistoricoContact(addContactData);
 
 		if (savedContactsLocalStorage) {
 			const contacts = JSON.parse(savedContactsLocalStorage);

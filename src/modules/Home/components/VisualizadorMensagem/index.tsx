@@ -3,14 +3,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "../../../../shared/componen
 interface VisualizadorMensagemProps {
   avatar: string;
 	nome: string;
-	mensagem: string;
-	data: string;
-	notificacao: number;
+	mensagem: string | null;
+	data: string | null;
+	notificacao: number | null;
 }
 
 export const VisualizadorMensagem = ({avatar, nome, data, notificacao, mensagem }: VisualizadorMensagemProps) => {
 	return (
-		<div className="flex justify-between cursor-pointer items-center border-b-2 py-2">
+		<div className="flex justify-between cursor-pointer items-center border-b-2 py-2 h-16">
 			<div className="flex">
 				<Avatar>
 					<AvatarImage src={avatar} />

@@ -1,8 +1,10 @@
 import { GoSearch } from "react-icons/go";
 import { VisualizadorMensagem } from "../VisualizadorMensagem";
-import { historicoMensagens } from "../../mocks/historicoMensagens";
+import { useChatContext } from "../../context/ChatHook";
 
 export const Historico = () => {
+	const {  historicoMensagens } = useChatContext();
+
 	return (
 		<section className="w-96 p-3 overflow-y-auto border-r-2">
 			<header className="h-32">
