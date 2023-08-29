@@ -8,14 +8,20 @@ export interface IUserData {
 export interface IContactsData extends IUserData {
 }
 
+export interface Messages {
+	id_pessoa: string;
+	nome_pessoa: string;
+	mensagem: string;
+	data: string;
+}
+
 export interface IHistoricoMensagens {
 	id: string;
 	nome_pessoa: string;
 	avatar: string;
-	mensagem: string | null;
-	data: string | null;
 	notificacao: number | null;
 	contato: string;
+	messages: Messages[];
 }
 
 export type ChatContextProps = {
@@ -25,6 +31,8 @@ export type ChatContextProps = {
 	setContactsData: React.Dispatch<React.SetStateAction<IContactsData[]>>
 	historicoMensagens: IHistoricoMensagens[];
 	addHistoricoContact: (data: IContactsData) => void;
+	selectedMessage: IHistoricoMensagens;
+	setSelectedMessage: React.Dispatch<React.SetStateAction<IHistoricoMensagens>>
 }
 
 export const ChatContext = createContext<ChatContextProps>({} as ChatContextProps);

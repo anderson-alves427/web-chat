@@ -1,9 +1,14 @@
 import { GoSearch } from "react-icons/go";
 import { useChatContext } from "../../context/ChatHook";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../shared/components/ui/avatar";
+import { IHistoricoMensagens } from "../../context/ChatContext";
 
 export const Historico = () => {
-	const {  historicoMensagens } = useChatContext();
+	const {  historicoMensagens, setSelectedMessage } = useChatContext();
+
+	const handleClick = (item: IHistoricoMensagens) => {
+		setSelectedMessage(item);
+	}
 
 	return (
 		<section className="w-96 p-3 overflow-y-auto border-r-2">
@@ -16,7 +21,7 @@ export const Historico = () => {
 			</header>
 			<div className=" min-h-[calc(100%_-_8rem)]">
 				{historicoMensagens.map(item => (
-					<div className="flex justify-between cursor-pointer items-center border-b-2 py-2 h-16">
+					<div className="flex justify-between cursor-pointer items-center border-b-2 py-2 h-16" onClick={() => handleClick(item)}>
 						<div className="flex">
 							<Avatar>
 								<AvatarImage src={item.avatar} />
@@ -24,11 +29,11 @@ export const Historico = () => {
 							</Avatar>
 							<div className="ml-2">
 								<p className="font-semibold">{item.nome_pessoa}</p>
-								<span className="text-sm">{item.mensagem}</span>
+								<span className="text-sm">{ item.messages.length > 0 ? item.messages[item.messages.length -1].mensagem : ''}</span>
 							</div>
 						</div>
 						<div className="flex flex-col justify-between items-end">
-							<p className="text-xs">{item.data}</p>
+							<p className="text-xs">{ item.messages.length > 0 ? item.messages[item.messages.length -1].data : ''}</p>
 							<span className="text-xs text-center bg-red-600 w-4 rounded-full text-white">{item.notificacao}</span>
 						</div>
 					</div>

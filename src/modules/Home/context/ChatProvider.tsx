@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { ChatContext, IContactsData, IHistoricoMensagens, IUserData } from "./ChatContext";
-import { historicoMensagensMock } from "../mocks/historicoMensagens";
 
 const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 	const [userData, setUserData] = useState<IUserData>({} as IUserData);
 	const [contactsData, setContactsData] = useState<IContactsData[]>([]);
-	const [historicoMensagens, sethistoricoMensagens] = useState<IHistoricoMensagens[]>(historicoMensagensMock);
+	const [historicoMensagens, sethistoricoMensagens] = useState<IHistoricoMensagens[]>([]);
+	const [selectedMessage, setSelectedMessage] = useState<IHistoricoMensagens>({} as IHistoricoMensagens);
 
 	const handleChangeUserData = (data: IUserData) => {
 		setUserData(data);
@@ -14,12 +14,11 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 	const addHistoricoContact = (data: IContactsData) => {
 		sethistoricoMensagens(prev => ([{
 			avatar: 'https://github.com/shadcn.png',
-			data: null,
 			id: '123',
-			mensagem: null,
 			nome_pessoa: data.nome,
 			notificacao: null,
-			contato: data.contato
+			contato: data.contato,
+			messages: []
 		}, ...prev]))
 	}
 
@@ -45,7 +44,9 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 				contactsData,
 				setContactsData,
 				historicoMensagens,
-				addHistoricoContact
+				addHistoricoContact,
+				selectedMessage,
+				setSelectedMessage
 			}}>
 			{children}
 		</ChatContext.Provider>
