@@ -4,9 +4,24 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../../
 import { GoPaperclip } from "react-icons/go";
 import { AiOutlineCamera } from "react-icons/ai";
 import { useChatContext } from "../../context/ChatHook";
+import React, { useState } from "react";
+import { socket } from "../../../../shared/api/socket";
 
 export const Mensagem = () => {
-	const { selectedMessage } = useChatContext();
+	const { selectedMessage, userData } = useChatContext();
+	const [text, setText] = useState('');
+
+	const handleClickSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') {
+			socket.emit('message-chat', {
+				id_pessoa_remetente: userData.contato,
+				message: text,
+				id_pessoa_destinatario: selectedMessage.id,
+			}, ()=> console.log("teste"));
+
+			setText('');
+		}
+	}
 
 	return (
 		<section className="w-full h-full p-3">
@@ -97,7 +112,7 @@ export const Mensagem = () => {
 										</TooltipContent>
 									</Tooltip>
 								</TooltipProvider>
-								<input type="text" className="w-full outline-0 ml-2"/>
+								<input type="text" className="w-full outline-0 ml-2" value={text} onChange={(e) => setText(e.target.value)} onKeyUp={handleClickSendMessage}/>
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger>
