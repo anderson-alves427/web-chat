@@ -1,6 +1,6 @@
 import { GoSearch } from "react-icons/go";
-import { VisualizadorMensagem } from "../VisualizadorMensagem";
 import { useChatContext } from "../../context/ChatHook";
+import { Avatar, AvatarFallback, AvatarImage } from "../../../../shared/components/ui/avatar";
 
 export const Historico = () => {
 	const {  historicoMensagens } = useChatContext();
@@ -16,7 +16,22 @@ export const Historico = () => {
 			</header>
 			<div className=" min-h-[calc(100%_-_8rem)]">
 				{historicoMensagens.map(item => (
-					<VisualizadorMensagem key={item.id} avatar={item.avatar} nome={item.nome_pessoa} data={item.data} notificacao={item.notificacao} mensagem={item.mensagem}/>
+					<div className="flex justify-between cursor-pointer items-center border-b-2 py-2 h-16">
+						<div className="flex">
+							<Avatar>
+								<AvatarImage src={item.avatar} />
+								<AvatarFallback>{item.nome_pessoa}</AvatarFallback>
+							</Avatar>
+							<div className="ml-2">
+								<p className="font-semibold">{item.nome_pessoa}</p>
+								<span className="text-sm">{item.mensagem}</span>
+							</div>
+						</div>
+						<div className="flex flex-col justify-between items-end">
+							<p className="text-xs">{item.data}</p>
+							<span className="text-xs text-center bg-red-600 w-4 rounded-full text-white">{item.notificacao}</span>
+						</div>
+					</div>
 				))}
 			</div>
 		</section>
