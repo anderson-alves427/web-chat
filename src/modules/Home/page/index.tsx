@@ -9,16 +9,11 @@ export const Home = () => {
 	const { userData } = useChatContext();
 
 	useEffect(() => {
-		socket.emit('join-room', userData.contato);
-
+		socket.emit('join-chat', userData.contato);
+		// socket.on('join-chat', (teste) => {console.log(teste)})
 		socket.on('message-chat', (message) => {
       console.log(message);
     });
-
-
-		return () => {
-      socket.disconnect();
-    };
 
 	}, [userData]);
 

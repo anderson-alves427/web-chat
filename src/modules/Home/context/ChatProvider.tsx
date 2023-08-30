@@ -14,7 +14,7 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 	const addHistoricoContact = (data: IContactsData) => {
 		sethistoricoMensagens(prev => ([{
 			avatar: 'https://github.com/shadcn.png',
-			id: '123',
+			id: data.contato,
 			nome_pessoa: data.nome,
 			notificacao: null,
 			contato: data.contato,
