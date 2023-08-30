@@ -22,7 +22,7 @@ export const Menu = () => {
 
 							if (item.action === 'open-modal') {
 								return  (
-								<li>
+								<li key={item.id}>
 									<DialogsMenu nome={item.nome}>
 										<button>
 											<TooltipProvider>
@@ -38,7 +38,7 @@ export const Menu = () => {
 								</li>
 								)
 							}
-							return (<li>
+							return (<li key={item.id}>
 								<TooltipProvider>
 									<Tooltip>
 										<TooltipTrigger><IconsMenu nome={item.icon} size={30} color="white"/></TooltipTrigger>
