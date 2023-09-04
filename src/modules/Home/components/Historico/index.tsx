@@ -2,13 +2,93 @@ import { GoSearch } from "react-icons/go";
 import { useChatContext } from "../../context/ChatHook";
 import { Avatar, AvatarFallback, AvatarImage } from "../../../../shared/components/ui/avatar";
 import { IHistoricoMensagens } from "../../context/ChatContext";
+import { useEffect } from "react";
+import { socket } from "../../../../shared/api/socket";
+import { IMessagesChat } from "../../interfaces/IMessagesChat";
 
 export const Historico = () => {
-	const {  historicoMensagens, setSelectedMessage } = useChatContext();
+	const {  historicoMensagens, setSelectedMessage, userData, sethistoricoMensagens } = useChatContext();
 
 	const handleClick = (item: IHistoricoMensagens) => {
 		setSelectedMessage(item);
 	}
+
+	const addMessage = () => {
+		socket.on('message-chat', (message: IMessagesChat) => {
+
+			sethistoricoMensagens((prevState) => {
+				const indexMessage = prevState.findIndex(item => item.id === message.id_pessoa_destinatario);
+
+				if (indexMessage === -1) {
+					const params: IHistoricoMensagens = {
+						avatar: 'https://github.com/shadcn.png',
+						id: message.id_pessoa_destinatario,
+						contato: message.id_pessoa_destinatario,
+						nome_pessoa: message.nome_destinatario,
+						notificacao: 1,
+						messages: [{
+							id_pessoa: message.id_pessoa_destinatario,
+							data: message.data,
+							mensagem: message.message,
+							nome_pessoa: message.nome_destinatario
+						}]
+					}
+					return [...[params], ...prevState];
+				} else {
+					const mensagens = prevState.map((item, index) => {
+						if (indexMessage === index) {
+							return {
+								avatar: item.avatar,
+								id: item.id,
+								contato: item.contato,
+								nome_pessoa: item.nome_pessoa,
+								notificacao: item.notificacao,
+								messages: [
+									...item.messages,
+									...
+									[{
+									id_pessoa: message.id_pessoa_destinatario,
+									data: message.data,
+									mensagem: message.message,
+									nome_pessoa: message.nome_destinatario
+									}]
+								]
+							}
+						} else {
+							return item;
+						}
+					})
+					return mensagens;
+				}
+
+			});
+		});
+	}
+
+	useEffect(() => {
+		setSelectedMessage(prevState => {
+			const indexMessageSelected = historicoMensagens.findIndex(item => item.id === prevState.id);
+
+			if (indexMessageSelected !== -1) {
+				return {
+					...prevState,
+					messages: historicoMensagens[indexMessageSelected].messages
+				}
+			}
+
+			return prevState;
+		})
+	}, [historicoMensagens, setSelectedMessage]);
+
+	useEffect(() => {
+		socket.emit('join-chat', userData.contato);
+
+		addMessage();
+		return function cleanup() {
+      socket.removeListener("message-chat");
+    };
+
+	}, [userData, historicoMensagens]);
 
 	return (
 		<section className="w-96 p-3 overflow-y-auto border-r-2">

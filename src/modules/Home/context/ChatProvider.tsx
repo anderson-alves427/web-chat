@@ -19,7 +19,7 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 			notificacao: null,
 			contato: data.contato,
 			messages: []
-		}, ...prev]))
+		}, ...prev]));
 	}
 
 	useEffect(() => {
@@ -31,7 +31,11 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 		}
 
 		if (savedContactsLocalStorage) {
-			setContactsData(JSON.parse(savedContactsLocalStorage));
+			const savedContacts: IContactsData[] = JSON.parse(savedContactsLocalStorage)
+			setContactsData(savedContacts);
+			savedContacts.forEach(contact => {
+				addHistoricoContact(contact)
+			});
 		}
 
 	}, []);
@@ -46,7 +50,8 @@ const ChatProvider = ({ children } : { children: React.ReactNode }) => {
 				historicoMensagens,
 				addHistoricoContact,
 				selectedMessage,
-				setSelectedMessage
+				setSelectedMessage,
+				sethistoricoMensagens
 			}}>
 			{children}
 		</ChatContext.Provider>

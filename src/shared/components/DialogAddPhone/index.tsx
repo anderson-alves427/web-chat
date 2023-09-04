@@ -85,7 +85,6 @@ export const DialogAddPhone = ({ children }: DialogAddPhoneProps) => {
 						<DialogCloseUi>
 							<Button
 								ref={refCloseDialog}
-								type="submit"
 								className="min-w-[100px] bg-purple-600"
 							>
 								Cancelar

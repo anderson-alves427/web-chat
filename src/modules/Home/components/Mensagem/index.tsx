@@ -8,7 +8,7 @@ import React, { useState } from "react";
 import { socket } from "../../../../shared/api/socket";
 
 export const Mensagem = () => {
-	const { selectedMessage, userData } = useChatContext();
+	const { selectedMessage, userData, setSelectedMessage } = useChatContext();
 	const [text, setText] = useState('');
 
 	const handleClickSendMessage = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -17,8 +17,23 @@ export const Mensagem = () => {
 				id_pessoa_remetente: userData.contato,
 				message: text,
 				id_pessoa_destinatario: selectedMessage.id,
-			}, ()=> console.log("teste"));
+				nome_destinatario: userData.nome
+			});
 
+			setSelectedMessage(prevState => {
+					return {
+						...prevState,
+						messages: [
+							...prevState.messages,
+							...[{
+									id_pessoa: userData.contato,
+									nome_pessoa: prevState.nome_pessoa,
+									mensagem: text,
+									data: '08:00',
+							}]
+						]
+					}
+			});
 			setText('');
 		}
 	}

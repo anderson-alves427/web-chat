@@ -32,7 +32,8 @@ export type ChatContextProps = {
 	historicoMensagens: IHistoricoMensagens[];
 	addHistoricoContact: (data: IContactsData) => void;
 	selectedMessage: IHistoricoMensagens;
-	setSelectedMessage: React.Dispatch<React.SetStateAction<IHistoricoMensagens>>
+	setSelectedMessage: React.Dispatch<React.SetStateAction<IHistoricoMensagens>>;
+	sethistoricoMensagens: React.Dispatch<React.SetStateAction<IHistoricoMensagens[]>>;
 }
 
 export const ChatContext = createContext<ChatContextProps>({} as ChatContextProps);
